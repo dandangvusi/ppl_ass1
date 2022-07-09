@@ -24,8 +24,104 @@ options {
 
 // DANG VU SI DAN - 2020017
 
-program: EOF;
+// ================================================================== PARSER ==================================================================
 
+program: glob_var_decl_part? func_decl_part EOF;
+
+// GLOBAL VARIABLE DECLARATION PART
+glob_var_decl_part: var_decl_list?;
+
+var_decl_list: var_decl var_decl_list | var_decl;
+
+var_decl: VAR COLON var_list SEMI;
+
+var_list: var COMMA var_list | var;
+
+var: scalar_var | compo_var;
+
+scalar_var: ID (ASSIGN literal)?;
+
+compo_var: ID dimensions (ASSIGN ARRAY_LIT)?;
+
+// FUNCTION DECLARATION PART
+func_decl_part: func_decl_list?;
+
+func_decl_list: func_decl func_decl_list | func_decl;
+
+func_decl: FUNCTION COLON ID func_param? func_body;
+
+func_param: PARAMETER COLON param_list;
+
+param_list: param COMMA param_list | param;
+
+param: ID | ID dimensions;
+
+func_body: BODY COLON stmt_list? ENDBODY DOT;
+
+stmt_list: var_decl_stmt_list other_stmt_list;
+
+var_decl_stmt_list:
+	var_decl_stmt var_decl_stmt_list
+	| var_decl_stmt;
+
+other_stmt_list: other_stmt other_stmt_list | other_stmt;
+
+other_stmt:
+	assign_stmt
+	| if_stmt
+	| for_stmt
+	| while_stmt
+	| do_while_stmt
+	| break_stmt
+	| continue_stmt
+	| call_stmt
+	| return_stmt;
+
+var_decl_stmt: VAR COLON var_list SEMI;
+
+assign_stmt: (ID | index_exp) ASSIGN exp SEMI;
+
+if_stmt:
+	IF exp THEN stmt_list? else_if_list? (ELSE stmt_list?)? ENDIF DOT;
+
+else_if_list: else_if else_if_list | else_if;
+
+else_if: ELSEIF exp THEN stmt_list?;
+
+for_stmt:
+	FOR LB ID ASSIGN exp COMMA exp COMMA exp RB DO stmt_list? ENDFOR DOT;
+
+while_stmt: WHILE exp DO stmt_list? ENDWHILE DOT;
+
+do_while_stmt: DO stmt_list WHILE exp ENDDO DOT;
+
+break_stmt: BREAK;
+
+continue_stmt: CONTINUE;
+
+call_stmt: ID LB exp_list? RB SEMI;
+
+return_stmt: RETURN exp? SEMI;
+
+exp: 'expression';
+
+exp_list: exp COMMA exp_list | exp;
+
+index_exp: 'index_exp';
+
+// HELPERS
+literal:
+	DEC_INT_LIT
+	| HEX_INT_LIT
+	| OCT_INT_LIT
+	| FLT_LIT
+	| BOOL_LIT
+	| STR_LIT
+	| ARRAY_LIT;
+
+dimensions: dimension dimensions | dimension;
+
+dimension: LS DEC_INT_LIT RS;
 // ================================================================== LEXER ==================================================================
 
 // FRAGMENTS
@@ -53,7 +149,7 @@ OCT_INT_LIT: OCT_PREFIX OCT_DEGIT OCT_DEGIT_NO_ZERO*;
 FLT_LIT:
 	FLT_INT_PART (FLT_DEC_PART FLT_EXP_PART? | FLT_EXP_PART);
 BOOL_LIT: (TRUE | FALSE);
-STRLIT:
+STR_LIT:
 	'"' (DOUBLE_QUOTE_CHAR | ESCAPE_CHAR | ~["\\\n\r])* '"' {self.text = self.text[1:-1]};
 ARRAY_LIT:
 	'{' (
@@ -61,7 +157,7 @@ ARRAY_LIT:
 		| HEX_INT_LIT
 		| OCT_INT_LIT
 		| FLT_LIT
-		| STRLIT
+		| STR_LIT
 		| ARRAY_LIT
 	) (
 		',' (
@@ -69,7 +165,7 @@ ARRAY_LIT:
 			| HEX_INT_LIT
 			| OCT_INT_LIT
 			| FLT_LIT
-			| STRLIT
+			| STR_LIT
 			| ARRAY_LIT
 		)
 	)* '}';
@@ -80,7 +176,7 @@ BREAK: 'Break';
 CONTINUE: 'Continue';
 DO: 'Do';
 ELSE: 'Else';
-ELSELF: 'Elself';
+ELSEIF: 'ElseIf';
 ENDBODY: 'Endbody';
 ENDIF: 'Endif';
 ENDFOR: 'Endfor';

@@ -103,13 +103,43 @@ call_stmt: ID LB exp_list? RB SEMI;
 
 return_stmt: RETURN exp? SEMI;
 
-exp: 'expression';
+exp:
+	exp1 (
+		EQ_I
+		| NEQ_I
+		| LT_I
+		| GT_I
+		| LTE_I
+		| GTE_I
+		| NEQ_F
+		| LT_F
+		| GT_F
+		| LTE_F
+		| GTE_F
+	) exp1
+	| exp1;
+
+exp1: exp1 (AND | OR) exp2 | exp2;
+
+exp2: exp2 (ADD_I | ADD_F | SUB_I | SUB_F) exp3 | exp3;
+
+exp3: exp3 (MUL_I | MUL_F | DIV_I | DIV_F | MOD_I) exp4 | exp4;
+
+exp4: NOT exp4 | exp5;
+
+exp5: (SUB_I | SUB_F) exp5 | index_exp;
+
+index_exp: index_exp index_operator | operand;
+
+index_operator: LS exp RS | LS exp RS index_operator;
+
+operand: literal | ID | func_call | LB exp RB;
+
+func_call: ID LB exp_list? RB;
 
 exp_list: exp COMMA exp_list | exp;
 
-index_exp: 'index_exp';
-
-// HELPERS
+// HELPER RULES
 literal:
 	DEC_INT_LIT
 	| HEX_INT_LIT
@@ -122,6 +152,7 @@ literal:
 dimensions: dimension dimensions | dimension;
 
 dimension: LS DEC_INT_LIT RS;
+
 // ================================================================== LEXER ==================================================================
 
 // FRAGMENTS

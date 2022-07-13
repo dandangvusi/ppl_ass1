@@ -58,7 +58,7 @@ param: ID | ID dimensions;
 
 func_body: BODY COLON stmt_list? ENDBODY DOT;
 
-stmt_list: var_decl_stmt_list other_stmt_list;
+stmt_list: var_decl_stmt_list? other_stmt_list;
 
 var_decl_stmt_list:
 	var_decl_stmt var_decl_stmt_list

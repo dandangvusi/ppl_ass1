@@ -394,3 +394,169 @@ class LexerSuite(unittest.TestCase):
                 EndBody.
             """,
             """Var,:,x,=,1.5e2,,,y,=,3.6,;,Function,:,main,Body,:,Var,:,z,;,z,=,x,<=.,y,;,print,(,z,),;,EndBody,.,<EOF>""", 160))
+
+    def test_general_10(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: multipleArray
+            Parameter: a[5], b
+                Body:
+                    Var: i = 0;
+                    While i < 5 Do
+                        a[i] = a[i]*b;
+                        i = i + 1;
+                    EndWhile.
+                EndBody.
+            Function: main
+                Body:
+                    Var: a[5] = {1,2,3,4,5}, b = 2;
+                    multipleArray(a,b)
+                EndBody.
+            """,
+            """Function,:,multipleArray,Parameter,:,a,[,5,],,,b,Body,:,Var,:,i,=,0,;,While,i,<,5,Do,a,[,i,],=,a,[,i,],*,b,;,i,=,i,+,1,;,EndWhile,.,EndBody,.,Function,:,main,Body,:,Var,:,a,[,5,],=,{1,2,3,4,5},,,b,=,2,;,multipleArray,(,a,,,b,),EndBody,.,<EOF>""", 161))
+
+    def test_general_11(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Var: x = 1.5e2, y = 3.6;
+            Function: main
+                Body:
+                    Var: a[5] = {1,2,3,4,5}, b = 2;
+                    a[0] = 0;
+                    b = 5;
+                    print(b);
+                EndBody.
+            """,
+            """Var,:,x,=,1.5e2,,,y,=,3.6,;,Function,:,main,Body,:,Var,:,a,[,5,],=,{1,2,3,4,5},,,b,=,2,;,a,[,0,],=,0,;,b,=,5,;,print,(,b,),;,EndBody,.,<EOF>""", 162))
+
+    def test_general_12(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: main
+                Body:
+                    Var: x = 5;
+                    If x > 0 Then
+                        print("x is greater than 0");
+                    ElseIf x == 0 Then
+                        print("x is equal to 0");
+                    Else
+                        print("x is less than 0");
+                EndBody.
+            """,
+            """Function,:,main,Body,:,Var,:,x,=,5,;,If,x,>,0,Then,print,(,x is greater than 0,),;,ElseIf,x,==,0,Then,print,(,x is equal to 0,),;,Else,print,(,x is less than 0,),;,EndBody,.,<EOF>""", 163))
+
+    def test_general_13(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: main
+                Body:
+                    Var: x = 5;
+                    For (i = 0, i < x, 1) Do
+                        writeln(i);
+                    EndFor.
+                EndBody.
+            """,
+            """Function,:,main,Body,:,Var,:,x,=,5,;,For,(,i,=,0,,,i,<,x,,,1,),Do,writeln,(,i,),;,EndFor,.,EndBody,.,<EOF>""", 164))
+
+    def test_general_14(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: main
+                Body:
+                    Var: i = 0;
+                    Do
+                        writeln(i);
+                        i = i + 1;
+                    While i < 5
+                    EndDo.
+                EndBody.
+            """,
+            """Function,:,main,Body,:,Var,:,i,=,0,;,Do,writeln,(,i,),;,i,=,i,+,1,;,While,i,<,5,EndDo,.,EndBody,.,<EOF>""", 165))
+
+    def test_general_15(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: main
+                Body:
+                    Var: x = 5;
+                    For (i = 0, i < x, 1) Do
+                        writeln(i);
+                        If i > 2 Then
+                            Break;
+                    EndFor.
+                EndBody.
+            """,
+            """Function,:,main,Body,:,Var,:,x,=,5,;,For,(,i,=,0,,,i,<,x,,,1,),Do,writeln,(,i,),;,If,i,>,2,Then,Break,;,EndFor,.,EndBody,.,<EOF>""", 166))
+
+    def test_general_16(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: main
+                Body:
+                    Var: x = 5;
+                    For (i = 0, i < x, 1) Do
+                        writeln(i);
+                        If i % 2 == 0 Then
+                            Continue;
+                    EndFor.
+                EndBody.
+            """,
+            """Function,:,main,Body,:,Var,:,x,=,5,;,For,(,i,=,0,,,i,<,x,,,1,),Do,writeln,(,i,),;,If,i,%,2,==,0,Then,Continue,;,EndFor,.,EndBody,.,<EOF>""", 167))
+
+    def test_general_17(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: main
+                Body:
+                    Var: x = 5;
+                    If x > 0 Then
+                        print("x is greater than 0");
+                    ElseIf x == 0 Then
+                        print("x is equal to 0");
+                    Else
+                        print("x is less than 0");
+                EndBody.
+            """,
+            """Function,:,main,Body,:,Var,:,x,=,5,;,If,x,>,0,Then,print,(,x is greater than 0,),;,ElseIf,x,==,0,Then,print,(,x is equal to 0,),;,Else,print,(,x is less than 0,),;,EndBody,.,<EOF>""", 168))
+
+    def test_general_18(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: isGreaterThanZero
+            Parameter: a
+                Body:
+                    If a > 0 Then
+                        Return True;
+                    Else
+                        Return False;
+                EndBody.
+            Function: main
+                Body:
+                    Var: x = 1;
+                    print(isGreaterThanZero(x));
+                EndBody.
+            """,
+            """Function,:,isGreaterThanZero,Parameter,:,a,Body,:,If,a,>,0,Then,Return,True,;,Else,Return,False,;,EndBody,.,Function,:,main,Body,:,Var,:,x,=,1,;,print,(,isGreaterThanZero,(,x,),),;,EndBody,.,<EOF>""", 169))
+
+    def test_built_in_function(self):
+        """test simple program with statements"""
+        self.assertTrue(TestLexer.checkLexeme(
+            """
+            Function: main
+                Body:
+                    printLn();
+                    print("Hello BKIT");
+                    printStrLn("Hello Dan");
+                    read();
+                EndBody.
+            """,
+            """Function,:,main,Body,:,printLn,(,),;,print,(,Hello BKIT,),;,printStrLn,(,Hello Dan,),;,read,(,),;,EndBody,.,<EOF>""", 170))

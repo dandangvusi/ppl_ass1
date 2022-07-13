@@ -172,16 +172,7 @@ fragment FLT_EXP_PART: ('e' | 'E') ('+' | '-')? (
 fragment ESCAPE_CHAR: '\\' [bfrnt'\\];
 fragment DOUBLE_QUOTE_CHAR: '\'"';
 
-// LITERALS
-DEC_INT_LIT: ('0' | DEGIT_NO_ZERO DEGIT*);
-HEX_INT_LIT:
-	HEX_PREFIX (DEGIT_NO_ZERO | HEX_CHAR) (DEGIT | HEX_CHAR)*;
-OCT_INT_LIT: OCT_PREFIX OCT_DEGIT OCT_DEGIT_NO_ZERO*;
-FLT_LIT:
-	FLT_INT_PART (FLT_DEC_PART FLT_EXP_PART? | FLT_EXP_PART);
-BOOL_LIT: (TRUE | FALSE);
-STR_LIT:
-	'"' (DOUBLE_QUOTE_CHAR | ESCAPE_CHAR | ~["\\\n\r])* '"' {self.text = self.text[1:-1]};
+// LITERALS (CHECK ARRAY LITERAL)
 ARRAY_LIT:
 	'{' (
 		DEC_INT_LIT
@@ -200,6 +191,15 @@ ARRAY_LIT:
 			| ARRAY_LIT
 		)
 	)* '}';
+DEC_INT_LIT: ('0' | DEGIT_NO_ZERO DEGIT*);
+HEX_INT_LIT:
+	HEX_PREFIX (DEGIT_NO_ZERO | HEX_CHAR) (DEGIT | HEX_CHAR)*;
+OCT_INT_LIT: OCT_PREFIX OCT_DEGIT OCT_DEGIT_NO_ZERO*;
+FLT_LIT:
+	FLT_INT_PART (FLT_DEC_PART FLT_EXP_PART? | FLT_EXP_PART);
+BOOL_LIT: (TRUE | FALSE);
+STR_LIT:
+	'"' (DOUBLE_QUOTE_CHAR | ESCAPE_CHAR | ~["\\\n\r])* '"' {self.text = self.text[1:-1]};
 
 // KEYWORDS
 BODY: 'Body';
@@ -208,10 +208,10 @@ CONTINUE: 'Continue';
 DO: 'Do';
 ELSE: 'Else';
 ELSEIF: 'ElseIf';
-ENDBODY: 'Endbody';
-ENDIF: 'Endif';
-ENDFOR: 'Endfor';
-ENDWHILE: 'Endwhile';
+ENDBODY: 'EndBody';
+ENDIF: 'EndIf';
+ENDFOR: 'EndFor';
+ENDWHILE: 'EndWhile';
 FOR: 'For';
 FUNCTION: 'Function';
 IF: 'If';
@@ -220,9 +220,9 @@ RETURN: 'Return';
 THEN: 'Then';
 VAR: 'Var';
 WHILE: 'While';
-TRUE: 'True';
-FALSE: 'False';
-ENDDO: 'Enddo';
+fragment TRUE: 'True';
+fragment FALSE: 'False';
+ENDDO: 'EndDo';
 
 // OPERATOR
 ADD_I: '+';
@@ -263,7 +263,7 @@ COMMA: ',';
 DOT: '.';
 
 // IDENTIFIERS
-ID: [_a-zA-Z][_a-zA-Z0-9]*;
+ID: [a-z][_a-zA-Z0-9]*;
 
 // COMMENTS
 COMMENT: ('**' .*? '**') -> skip;

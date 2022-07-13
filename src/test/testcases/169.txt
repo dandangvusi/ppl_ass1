@@ -6,6 +6,7 @@
                         Return True;
                     Else
                         Return False;
+                    EndIf.
                 EndBody.
             Function: main
                 Body:

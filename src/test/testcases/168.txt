@@ -8,5 +8,6 @@
                         print("x is equal to 0");
                     Else
                         print("x is less than 0");
+                    EndIf.
                 EndBody.
             

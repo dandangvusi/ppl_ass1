@@ -444,9 +444,10 @@ class LexerSuite(unittest.TestCase):
                         print("x is equal to 0");
                     Else
                         print("x is less than 0");
+                    EndIf.
                 EndBody.
             """,
-            """Function,:,main,Body,:,Var,:,x,=,5,;,If,x,>,0,Then,print,(,x is greater than 0,),;,ElseIf,x,==,0,Then,print,(,x is equal to 0,),;,Else,print,(,x is less than 0,),;,EndBody,.,<EOF>""", 163))
+            """Function,:,main,Body,:,Var,:,x,=,5,;,If,x,>,0,Then,print,(,x is greater than 0,),;,ElseIf,x,==,0,Then,print,(,x is equal to 0,),;,Else,print,(,x is less than 0,),;,EndIf,.,EndBody,.,<EOF>""", 163))
 
     def test_general_13(self):
         """test simple program with statements"""
@@ -489,10 +490,11 @@ class LexerSuite(unittest.TestCase):
                         writeln(i);
                         If i > 2 Then
                             Break;
+                        EndIf.
                     EndFor.
                 EndBody.
             """,
-            """Function,:,main,Body,:,Var,:,x,=,5,;,For,(,i,=,0,,,i,<,x,,,1,),Do,writeln,(,i,),;,If,i,>,2,Then,Break,;,EndFor,.,EndBody,.,<EOF>""", 166))
+            """Function,:,main,Body,:,Var,:,x,=,5,;,For,(,i,=,0,,,i,<,x,,,1,),Do,writeln,(,i,),;,If,i,>,2,Then,Break,;,EndIf,.,EndFor,.,EndBody,.,<EOF>""", 166))
 
     def test_general_16(self):
         """test simple program with statements"""
@@ -505,10 +507,11 @@ class LexerSuite(unittest.TestCase):
                         writeln(i);
                         If i % 2 == 0 Then
                             Continue;
+                        EndIf.
                     EndFor.
                 EndBody.
             """,
-            """Function,:,main,Body,:,Var,:,x,=,5,;,For,(,i,=,0,,,i,<,x,,,1,),Do,writeln,(,i,),;,If,i,%,2,==,0,Then,Continue,;,EndFor,.,EndBody,.,<EOF>""", 167))
+            """Function,:,main,Body,:,Var,:,x,=,5,;,For,(,i,=,0,,,i,<,x,,,1,),Do,writeln,(,i,),;,If,i,%,2,==,0,Then,Continue,;,EndIf,.,EndFor,.,EndBody,.,<EOF>""", 167))
 
     def test_general_17(self):
         """test simple program with statements"""
@@ -523,9 +526,10 @@ class LexerSuite(unittest.TestCase):
                         print("x is equal to 0");
                     Else
                         print("x is less than 0");
+                    EndIf.
                 EndBody.
             """,
-            """Function,:,main,Body,:,Var,:,x,=,5,;,If,x,>,0,Then,print,(,x is greater than 0,),;,ElseIf,x,==,0,Then,print,(,x is equal to 0,),;,Else,print,(,x is less than 0,),;,EndBody,.,<EOF>""", 168))
+            """Function,:,main,Body,:,Var,:,x,=,5,;,If,x,>,0,Then,print,(,x is greater than 0,),;,ElseIf,x,==,0,Then,print,(,x is equal to 0,),;,Else,print,(,x is less than 0,),;,EndIf,.,EndBody,.,<EOF>""", 168))
 
     def test_general_18(self):
         """test simple program with statements"""
@@ -538,6 +542,7 @@ class LexerSuite(unittest.TestCase):
                         Return True;
                     Else
                         Return False;
+                    EndIf.
                 EndBody.
             Function: main
                 Body:
@@ -545,7 +550,7 @@ class LexerSuite(unittest.TestCase):
                     print(isGreaterThanZero(x));
                 EndBody.
             """,
-            """Function,:,isGreaterThanZero,Parameter,:,a,Body,:,If,a,>,0,Then,Return,True,;,Else,Return,False,;,EndBody,.,Function,:,main,Body,:,Var,:,x,=,1,;,print,(,isGreaterThanZero,(,x,),),;,EndBody,.,<EOF>""", 169))
+            """Function,:,isGreaterThanZero,Parameter,:,a,Body,:,If,a,>,0,Then,Return,True,;,Else,Return,False,;,EndIf,.,EndBody,.,Function,:,main,Body,:,Var,:,x,=,1,;,print,(,isGreaterThanZero,(,x,),),;,EndBody,.,<EOF>""", 169))
 
     def test_built_in_function(self):
         """test simple program with statements"""

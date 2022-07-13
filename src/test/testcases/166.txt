@@ -6,6 +6,7 @@
                         writeln(i);
                         If i > 2 Then
                             Break;
+                        EndIf.
                     EndFor.
                 EndBody.
             

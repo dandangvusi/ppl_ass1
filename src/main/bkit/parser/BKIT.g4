@@ -127,13 +127,15 @@ exp3: exp3 (MUL_I | MUL_F | DIV_I | DIV_F | MOD_I) exp4 | exp4;
 
 exp4: NOT exp4 | exp5;
 
-exp5: (SUB_I | SUB_F) exp5 | index_exp;
+exp5: (SUB_I | SUB_F) exp5 | index_exp | func_call_exp;
 
-index_exp: index_exp index_operator | operand;
+index_exp: (ID|func_call) index_operator;
 
 index_operator: LS exp RS | LS exp RS index_operator;
 
-operand: literal | ID | func_call | LB exp RB;
+func_call_exp: func_call | operand;
+
+operand: literal | ID | LB exp RB;
 
 func_call: ID LB exp_list? RB;
 

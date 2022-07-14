@@ -168,6 +168,93 @@ class ParserSuite(unittest.TestCase):
         expect = "Error on line 3 col 8: Return"
         self.assertTrue(TestParser.checkParser(input, expect, 210))
 
+    def test_simple_program_11(self):
+        """Simple program with variable declare statement"""
+        input = """
+        Var: x = 5, y = 2.0, z = "x*y = ";
+        Function: main
+            Body:
+                Var: a;
+                a = x * y;
+                print(z);
+                print(a);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 211))
+
+    def test_simple_program_12(self):
+        """Simple program with variable declare statement"""
+        input = """
+        Var: x = 1.5e2, y = 3.6;
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                a[0] = 0;
+                b = 5;
+                print(b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 212))
+
+    def test_simple_program_13(self):
+        """Simple program with variable declare statement apear after other statements"""
+        input = """
+        Var: x = 1.5e2, y = 3.6;
+        Function: main
+            Body:
+                a[0] = 0;
+                b = 5;
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                print(b);
+            EndBody.
+        """
+        expect = "Error on line 7 col 16: Var"
+        self.assertTrue(TestParser.checkParser(input, expect, 213))
+
+    def test_simple_program_14(self):
+        """Simple program with assignment statement"""
+        input = """
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                a[0] = getBigger(a[1], a[2]);
+                b = 5 + 2*3;
+                print(b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 214))
+
+    def test_simple_program_15(self):
+        """Simple program with illegal assignment statement"""
+        input = """
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                5 = getBigger(a[1], a[2]);
+                b = 5 + 2*3;
+                print(b);
+            EndBody.
+        """
+        expect = "Error on line 5 col 16: 5"
+        self.assertTrue(TestParser.checkParser(input, expect, 215))
+
+    def test_simple_program_16(self):
+        """Simple program with illegal assignment statement"""
+        input = """
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                a[0] = getBigger(a[1], a[2]);
+                True = 5 + 2*3;
+                print(b);
+            EndBody.
+        """
+        expect = "Error on line 6 col 16: True"
+        self.assertTrue(TestParser.checkParser(input, expect, 216))
+
     # def test_wrong_miss_close(self):
     #     """Miss variable"""
     #     input = """Var: ;"""

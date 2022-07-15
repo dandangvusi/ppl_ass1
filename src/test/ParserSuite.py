@@ -255,6 +255,315 @@ class ParserSuite(unittest.TestCase):
         expect = "Error on line 6 col 16: True"
         self.assertTrue(TestParser.checkParser(input, expect, 216))
 
+    def test_simple_program_17(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1) Do
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 217))
+
+    def test_simple_program_18(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1 * 2) Do
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                    writeln(i);
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 218))
+
+    def test_simple_program_19(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, getBigger(2, 3)) Do
+                    writeln(i);
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 219))
+
+    def test_simple_program_20(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x) Do
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "Error on line 5 col 33: )"
+        self.assertTrue(TestParser.checkParser(input, expect, 220))
+
+    def test_simple_program_21(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1)
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "Error on line 6 col 20: writeln"
+        self.assertTrue(TestParser.checkParser(input, expect, 221))
+
+    def test_simple_program_22(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1) Do
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 222))
+
+    def test_simple_program_23(self):
+        """Simple program with while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                While i < 5 Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                EndWhile.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 223))
+
+    def test_simple_program_24(self):
+        """Simple program with while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                While i < 5 + 1 Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                EndWhile.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 224))
+
+    def test_simple_program_25(self):
+        """Simple program with while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                While i < 5 Do
+                EndWhile.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 225))
+
+    def test_simple_program_26(self):
+        """Simple program with while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                While i < 5 Do
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "Error on line 7 col 12: EndBody"
+        self.assertTrue(TestParser.checkParser(input, expect, 226))
+
+    def test_simple_program_27(self):
+        """Simple program with do-while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                While i < 5
+                EndDo.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 227))
+
+    def test_simple_program_28(self):
+        """Simple program with do-while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                While i < 5 + 1
+                EndDo.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 228))
+
+    def test_simple_program_29(self):
+        """Simple program with do-while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                Do
+                While i < 5
+                EndDo.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 229))
+
+    def test_simple_program_30(self):
+        """Simple program with do-while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                Do
+                While i < 5
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "Error on line 8 col 12: EndBody"
+        self.assertTrue(TestParser.checkParser(input, expect, 230))
+
+    def test_simple_program_31(self):
+        """Simple program with Break statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1) Do
+                    print(i);
+                    If i > 3 Then
+                        Break;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 231))
+
+    def test_simple_program_32(self):
+        """Simple program with continue statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1) Do
+                    If i%2==0 Then
+                        Continue;
+                    EndIf.
+                    print(i);
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 232))
+
+    def test_simple_program_33(self):
+        """Simple program with call and return statement"""
+        input = """
+        Function: isGreaterZero
+        Parameter: a
+            Body:
+                Return a > 0;
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(isGreaterZero(x));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 233))
+
+
     # def test_wrong_miss_close(self):
     #     """Miss variable"""
     #     input = """Var: ;"""

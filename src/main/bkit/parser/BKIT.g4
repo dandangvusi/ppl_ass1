@@ -93,11 +93,11 @@ for_stmt:
 
 while_stmt: WHILE exp DO stmt_list? ENDWHILE DOT;
 
-do_while_stmt: DO stmt_list WHILE exp ENDDO DOT;
+do_while_stmt: DO stmt_list? WHILE exp ENDDO DOT;
 
-break_stmt: BREAK;
+break_stmt: BREAK SEMI;
 
-continue_stmt: CONTINUE;
+continue_stmt: CONTINUE SEMI;
 
 call_stmt: ID LB exp_list? RB SEMI;
 

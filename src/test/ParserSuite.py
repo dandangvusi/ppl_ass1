@@ -563,9 +563,132 @@ class ParserSuite(unittest.TestCase):
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input, expect, 233))
 
+    def test_simple_program_34(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = !b && a;
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 234))
 
-    # def test_wrong_miss_close(self):
-    #     """Miss variable"""
-    #     input = """Var: ;"""
-    #     expect = "Error on line 1 col 5: ;"
-    #     self.assertTrue(TestParser.checkParser(input,expect,202))
+    def test_simple_program_35(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = (c >. 1.0) || (c >. d);
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 235))
+
+    def test_simple_program_36(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = (c =/= d) && (d >. 0.0);
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 236))
+
+    def test_simple_program_37(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = arr1[1] + arr2[0] * arr2[1];
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 237))
+
+    def test_simple_program_38(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = abs(-2) % multi(2, 3) - 4;
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 238))
+
+    def test_simple_program_39(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = abs(arr1[1]) % multi(arr1[0], arr1[1]) - arr2[0];
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 239))
+
+    def test_simple_program_40(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = -e - -3;
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 240))
+
+    def test_simple_program_41(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = !!a && b || !b;
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 241))
+
+    def test_simple_program_42(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = e\\f\\2 - 2*3*1;
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 242))
+
+    def test_simple_program_43(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = e + 1 >= 3 * f;
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 243))

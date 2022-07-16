@@ -41,7 +41,7 @@ var: scalar_var | compo_var;
 
 scalar_var: ID (ASSIGN literal)?;
 
-compo_var: ID dimensions (ASSIGN ARRAY_LIT)?;
+compo_var: ID dimensions (ASSIGN array_lit)?;
 
 // FUNCTION DECLARATION PART
 func_decl_part: func_decl_list?;
@@ -149,7 +149,7 @@ literal:
 	| FLT_LIT
 	| BOOL_LIT
 	| STR_LIT
-	| ARRAY_LIT;
+	| array_lit;
 
 dimensions: dimension dimensions | dimension;
 
@@ -175,14 +175,14 @@ fragment ESCAPE_CHAR: '\\' [bfrnt'\\];
 fragment DOUBLE_QUOTE_CHAR: '\'"';
 
 // LITERALS (CHECK ARRAY LITERAL)
-ARRAY_LIT:
-	'{' (
+array_lit:
+	LC (
 		DEC_INT_LIT
 		| HEX_INT_LIT
 		| OCT_INT_LIT
 		| FLT_LIT
 		| STR_LIT
-		| ARRAY_LIT
+		| array_lit
 	) (
 		',' (
 			DEC_INT_LIT
@@ -190,9 +190,9 @@ ARRAY_LIT:
 			| OCT_INT_LIT
 			| FLT_LIT
 			| STR_LIT
-			| ARRAY_LIT
+			| array_lit
 		)
-	)* '}';
+	)* RC;
 DEC_INT_LIT: ('0' | DEGIT_NO_ZERO DEGIT*);
 HEX_INT_LIT:
 	HEX_PREFIX (DEGIT_NO_ZERO | HEX_CHAR) (DEGIT | HEX_CHAR)*;

@@ -239,5 +239,10 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BKITParser#array_lit.
+    def visitArray_lit(self, ctx:BKITParser.Array_litContext):
+        return self.visitChildren(ctx)
+
+
 
 del BKITParser

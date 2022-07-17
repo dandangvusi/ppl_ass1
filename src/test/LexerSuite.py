@@ -197,7 +197,7 @@ class LexerSuite(unittest.TestCase):
     def test_array_lit_1(self):
         """test array literal"""
         self.assertTrue(TestLexer.checkLexeme(
-            "{1,2,3,4,5}", "{1,2,3,4,5},<EOF>", 142))
+            "{1,2,3,4,5}", "{,1,,,2,,,3,,,4,,,5,},<EOF>", 142))
 
     def test_array_lit_2(self):
         """test array literal"""
@@ -207,7 +207,7 @@ class LexerSuite(unittest.TestCase):
     def test_array_lit_3(self):
         """test array literal"""
         self.assertTrue(TestLexer.checkLexeme(
-            "{{1,2},{3,4},{5,6}}", "{{1,2},{3,4},{5,6}},<EOF>", 144))
+            "{{1,2},{3,4},{5,6}}", "{,{,1,,,2,},,,{,3,,,4,},,,{,5,,,6,},},<EOF>", 144))
 
     def test_simple_program_1(self):
         """test simple program"""
@@ -217,7 +217,7 @@ class LexerSuite(unittest.TestCase):
     def test_simple_program_2(self):
         """test simple program"""
         self.assertTrue(TestLexer.checkLexeme(
-            "Var: a[2][3] = {{2,3,4},{5,6,7}};", "Var,:,a,[,2,],[,3,],=,{{2,3,4},{5,6,7}},;,<EOF>", 146))
+            "Var: a[2][3] = {{2,3,4},{5,6,7}};", "Var,:,a,[,2,],[,3,],=,{,{,2,,,3,,,4,},,,{,5,,,6,,,7,},},;,<EOF>", 146))
 
     def test_simple_program_3(self):
         """test simple program"""
@@ -414,7 +414,7 @@ class LexerSuite(unittest.TestCase):
                     multipleArray(a,b)
                 EndBody.
             """,
-            """Function,:,multipleArray,Parameter,:,a,[,5,],,,b,Body,:,Var,:,i,=,0,;,While,i,<,5,Do,a,[,i,],=,a,[,i,],*,b,;,i,=,i,+,1,;,EndWhile,.,EndBody,.,Function,:,main,Body,:,Var,:,a,[,5,],=,{1,2,3,4,5},,,b,=,2,;,multipleArray,(,a,,,b,),EndBody,.,<EOF>""", 161))
+            """Function,:,multipleArray,Parameter,:,a,[,5,],,,b,Body,:,Var,:,i,=,0,;,While,i,<,5,Do,a,[,i,],=,a,[,i,],*,b,;,i,=,i,+,1,;,EndWhile,.,EndBody,.,Function,:,main,Body,:,Var,:,a,[,5,],=,{,1,,,2,,,3,,,4,,,5,},,,b,=,2,;,multipleArray,(,a,,,b,),EndBody,.,<EOF>""", 161))
 
     def test_general_11(self):
         """test simple program with statements"""
@@ -429,7 +429,7 @@ class LexerSuite(unittest.TestCase):
                     print(b);
                 EndBody.
             """,
-            """Var,:,x,=,1.5e2,,,y,=,3.6,;,Function,:,main,Body,:,Var,:,a,[,5,],=,{1,2,3,4,5},,,b,=,2,;,a,[,0,],=,0,;,b,=,5,;,print,(,b,),;,EndBody,.,<EOF>""", 162))
+            """Var,:,x,=,1.5e2,,,y,=,3.6,;,Function,:,main,Body,:,Var,:,a,[,5,],=,{,1,,,2,,,3,,,4,,,5,},,,b,=,2,;,a,[,0,],=,0,;,b,=,5,;,print,(,b,),;,EndBody,.,<EOF>""", 162))
 
     def test_general_12(self):
         """test simple program with statements"""

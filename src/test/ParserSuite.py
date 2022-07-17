@@ -1148,3 +1148,512 @@ class ParserSuite(unittest.TestCase):
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input, expect, 270))
+
+    def test_simple_program_71(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                arr1[3 + foo(2)] = arr2[b[2][3]] + 4;
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 271))
+
+    def test_simple_program_72(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                arr1[3*2 - e] = arr2[b[2 - 1]] + 4;
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 272))
+
+    def test_simple_program_73(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                arr1[2][3] = arr2[1] + 4*2 - 9;
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 273))
+
+    def test_simple_program_74(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = string2int(read());
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 274))
+
+    def test_simple_program_75(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = string2int(read());
+                res = int2float(res) +. 2.0;
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 275))
+
+    def test_simple_program_76(self):
+        """Simple program with declare & assignment statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                res = string2int(read());
+                res = int2float(res) +. 2.0 *. arr1[0];
+                print(res);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 276))
+
+    def test_simple_program_77(self):
+        """Simple program with call statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                print(foo());
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 277))
+
+    def test_simple_program_78(self):
+        """Simple program with call statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                goo(x, y, z, "Hello");
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 278))
+
+    def test_simple_program_79(self):
+        """Simple program with call statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                foo(arr1[0], arr1[1]);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 279))
+
+    def test_simple_program_80(self):
+        """Simple program with call statement using expression"""
+        input = """
+        Function: main
+            Body:
+                Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};  
+                foo(a, !b, e);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 280))
+
+    def test_simple_program_81(self):
+        """Simple program"""
+        input = """
+        Var: x;
+        Function: fact
+            Parameter: n
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                x = 10;
+                fact(x);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 281))
+
+    def test_simple_program_82(self):
+        """Simple program no function declaration"""
+        input = """
+        Var: x;
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 282))
+
+    def test_simple_program_83(self):
+        """Simple program wrong parameter separate"""
+        input = """
+        Var: x;
+        Function: fact
+            Parameter: n,
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                x = 10;
+                fact(x);
+            EndBody.
+        """
+        expect = "Error on line 5 col 12: Body"
+        self.assertTrue(TestParser.checkParser(input, expect, 283))
+
+    def test_simple_program_84(self):
+        """Simple program initialized parameter"""
+        input = """
+        Var: x;
+        Function: fact
+            Parameter: n = 2
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                x = 10;
+                fact(x);
+            EndBody.
+        """
+        expect = "Error on line 4 col 25: ="
+        self.assertTrue(TestParser.checkParser(input, expect, 284))
+
+    def test_simple_program_85(self):
+        """Simple program with no statement main function"""
+        input = """
+        Var: x;
+        Function: fact
+            Parameter: n
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 285))
+
+    def test_simple_program_86(self):
+        """Simple program missing EndBody"""
+        input = """
+        Var: x;
+        Function: fact
+            Parameter: n
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                x = 10;
+                fact(x);
+        """
+        expect = "Error on line 16 col 8: <EOF>"
+        self.assertTrue(TestParser.checkParser(input, expect, 286))
+
+    def test_simple_program_87(self):
+        """Simple program with var declaration after function declare"""
+        input = """
+        Function: fact
+            Parameter: n
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                x = 10;
+                fact(x);
+            EndBody.
+        Var: x;
+        """
+        expect = "Error on line 16 col 8: Var"
+        self.assertTrue(TestParser.checkParser(input, expect, 287))
+
+    def test_simple_program_88(self):
+        """Simple program with wrong var declaration"""
+        input = """
+        Var: ;
+        Function: fact
+            Parameter: n
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+            EndBody.
+        """
+        expect = "Error on line 2 col 13: ;"
+        self.assertTrue(TestParser.checkParser(input, expect, 288))
+
+    def test_simple_program_89(self):
+        """Simple program with wrong var declaration"""
+        input = """
+        Var: x, ;
+        Function: fact
+            Parameter: n
+            Body:
+                If n==0 Then
+                    Return 1;
+                Else
+                    Return n*fact(n-1);
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+            EndBody.
+        """
+        expect = "Error on line 2 col 16: ;"
+        self.assertTrue(TestParser.checkParser(input, expect, 289))
+
+    def test_simple_program_90(self):
+        """Simple program"""
+        input = """
+        Function: double
+            Parameter: n
+            Body:
+                Return n * 2;
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(double(x));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 290))
+
+    def test_simple_program_91(self):
+        """Simple program"""
+        input = """
+        Function: double
+            Parameter: n
+            Body:
+                Return n * 2;
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(double(x + 4));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 291))
+
+    def test_simple_program_92(self):
+        """Simple program"""
+        input = """
+        Function: double
+            Parameter: n
+            Body:
+                Return n * 2;
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(double(4 * 4 - 3));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 292))
+
+    def test_simple_program_93(self):
+        """Simple program"""
+        input = """
+        Function: isGreaterZero
+            Parameter: n
+            Body:
+                Return n > 0;
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(isGreaterZero(4 * 4 - 3));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 293))
+
+    def test_simple_program_94(self):
+        """Simple program"""
+        input = """
+        Function: isGreaterZero
+            Parameter: n
+            Body:
+                Return n > 0;
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(isGreaterZero(-x));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 294))
+
+    def test_simple_program_95(self):
+        """Simple program"""
+        input = """
+        Function: isGreaterZero
+            Parameter: n
+            Body:
+                Return n > 0;
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(isGreaterZero(x));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 295))
+
+    def test_simple_program_96(self):
+        """Simple program"""
+        input = """
+        Function: abs
+            Parameter: n
+            Body:
+                If n >= 0 Then
+                    Return n;
+                Else
+                    Return -n;
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(abs(x));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 296))
+
+    def test_simple_program_97(self):
+        """Simple program"""
+        input = """
+        Function: abs
+            Parameter: n
+            Body:
+                If n >= 0 Then
+                    Return n;
+                Else
+                    Return -n;
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(abs(-x));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 297))
+
+    def test_simple_program_98(self):
+        """Simple program"""
+        input = """
+        Function: abs
+            Parameter: n
+            Body:
+                If n >= 0 Then
+                    Return n;
+                Else
+                    Return -n;
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(abs(-5 - 6));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 298))
+
+    def test_simple_program_99(self):
+        """Simple program"""
+        input = """
+        Function: abs
+            Parameter: n
+            Body:
+                If n >= 0 Then
+                    Return n;
+                Else
+                    Return -n;
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(abs(4*3\\2 - 1));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 299))
+
+    def test_simple_program_100(self):
+        """Simple program"""
+        input = """
+        Function: abs
+            Parameter: n
+            Body:
+                If n >= 0 Then
+                    Return n;
+                Else
+                    Return -n;
+                EndIf.
+            EndBody.
+        Function: main
+            Body:
+                Var: x = 5;
+                print(abs(True));
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 300))

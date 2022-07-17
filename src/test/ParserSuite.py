@@ -795,3 +795,356 @@ class ParserSuite(unittest.TestCase):
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input, expect, 251))
+
+    def test_simple_program_52(self):
+        """Simple program with If statement"""
+        input = """
+        Function: main
+                Body:
+                    Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};
+                    If c >. d Then
+                        print("If expression");
+                    ElseIf c <. d Then
+                        print("ElseIf expression");
+                    Else
+                        print("Else expression");
+                    EndIf.
+                EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 252))
+
+    def test_simple_program_53(self):
+        """Simple program with If statement"""
+        input = """
+        Function: main
+                Body:
+                    Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};
+                    If a Then
+                        print("If expression");
+                    ElseIf b Then
+                        print("ElseIf expression");
+                    Else
+                        print("Else expression");
+                    EndIf.
+                EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 253))
+
+    def test_simple_program_54(self):
+        """Simple program with If statement"""
+        input = """
+        Function: main
+                Body:
+                    Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};
+                    If a != f Then
+                        print("If expression");
+                    ElseIf e - 1 >= 0 Then
+                        print("ElseIf expression");
+                    Else
+                        print("Else expression");
+                    EndIf.
+                EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 254))
+
+    def test_simple_program_55(self):
+        """Simple program with If statement"""
+        input = """
+        Function: main
+                Body:
+                    Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};
+                    If len(g) > len(h) Then
+                        print("If expression");
+                    ElseIf len(g) < len(h) Then
+                        print("ElseIf expression");
+                    Else
+                        print("Else expression");
+                    EndIf.
+                EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 255))
+
+    def test_simple_program_56(self):
+        """Simple program with If statement"""
+        input = """
+        Function: main
+                Body:
+                    Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};
+                    If len(g) > len(h) Then
+                        d = d *. 2;
+                    ElseIf len(g) < len(h) Then
+                        d = len(g) *. 2;
+                    Else
+                        d = d +. 1;
+                    EndIf.
+                EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 256))
+
+    def test_simple_program_57(self):
+        """Simple program with If statement"""
+        input = """
+        Function: main
+                Body:
+                    Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};
+                    If len(g) > len(h) Then
+                        a = a || b;
+                    ElseIf len(g) < len(h) Then
+                        b = b || a;
+                    Else
+                        c = a && b;
+                    EndIf.
+                EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 257))
+
+    def test_simple_program_58(self):
+        """Simple program with If statement"""
+        input = """
+        Function: main
+                Body:
+                    Var: a = True, b = False, c = 2.4e-1, d = 1.0, e = 5, f = 3, g = "Hello", h = "Dan", arr1[2] = {1, 2}, arr2[2] = {3, 4};
+                    If len(g) > len(h) Then
+                        print(g);
+                    ElseIf len(g) < len(h) Then
+                        print(h);
+                    Else
+                        print("Else expression");
+                    EndIf.
+                EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 258))
+
+    def test_simple_program_59(self):
+        """Simple program with while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0, l = 5;
+                While i < l Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                EndWhile.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 259))
+
+    def test_simple_program_60(self):
+        """Simple program with while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                While i < 5 Do
+                    a[i] = a[i]\\b;
+                    i = i + 1;
+                EndWhile.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 260))
+
+    def test_simple_program_61(self):
+        """Simple program with while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                While True Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                EndWhile.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 261))
+
+    def test_simple_program_62(self):
+        """Simple program with do-while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0, l = 5;
+                Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                While i < l
+                EndDo.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 262))
+
+    def test_simple_program_63(self):
+        """Simple program with do-while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                While i < 1 + 2 * 2
+                EndDo.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 263))
+
+    def test_simple_program_64(self):
+        """Simple program with do-while statement"""
+        input = """
+        Function: multipleArray
+            Parameter: a[5], b
+            Body:
+                Var: i = 0;
+                Do
+                    a[i] = a[i]*b;
+                    i = i + 1;
+                While True
+                EndDo.
+            EndBody.
+        Function: main
+            Body:
+                Var: a[5] = {1,2,3,4,5}, b = 2;
+                multipleArray(a,b);
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 264))
+
+    def test_simple_program_65(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < 100 * 2 - 5, 1) Do
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 265))
+
+    def test_simple_program_66(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 1 + 2 * 3, i < 1000, 1) Do
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 266))
+
+    def test_simple_program_67(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < 100, x) Do
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 267))
+
+    def test_simple_program_68(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1*2) Do
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 268))
+
+    def test_simple_program_69(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 0, i < x, 1) Do
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 269))
+
+    def test_simple_program_70(self):
+        """Simple program with for statement"""
+        input = """
+        Function: main
+            Body:
+                Var: x = 5;
+                For (i = 10, i < x*100, 5*2) Do
+                    writeln(i);
+                    If i % 2 == 0 Then
+                        Continue;
+                    EndIf.
+                EndFor.
+            EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 270))

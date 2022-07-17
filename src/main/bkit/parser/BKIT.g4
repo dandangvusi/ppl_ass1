@@ -153,7 +153,7 @@ literal:
 
 dimensions: dimension dimensions | dimension;
 
-dimension: LS DEC_INT_LIT RS;
+dimension: LS (DEC_INT_LIT | HEX_INT_LIT | OCT_INT_LIT) RS;
 
 // ================================================================== LEXER ==================================================================
 
